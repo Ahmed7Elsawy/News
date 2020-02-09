@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/TopHeadlinesFragment">
+
+    <fragment android:id="@+id/TopHeadlinesFragment"
+        android:name="com.elsawy.ahmed.news.ui.news.topHeadlines.TopHeadlinesFragment"
+        android:label="top_headlines_fragment"
+        tools:layout="@layout/top_headlines_fragment"/>
+
+
+    <fragment
+        android:id="@+id/EverythingFragment"
+        android:name="com.elsawy.ahmed.news.ui.news.everything.EverythingFragment"
+        android:label="everything_fragment"
+        tools:layout="@layout/everything_fragment" />
+    <fragment
+        android:id="@+id/SettingsFragment"
+        android:name="com.elsawy.ahmed.news.ui.settings.SettingsFragment"
+        android:label="settings_fragment"
+        tools:layout="@layout/settings_fragment" />
+</navigation>

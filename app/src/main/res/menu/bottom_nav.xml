@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/TopHeadlinesFragment"
+        android:icon="@drawable/ic_dashboard_24dp"
+        android:title="@string/top_headlines"
+        />
+    <item
+        android:id="@+id/EverythingFragment"
+        android:icon="@drawable/ic_dashboard_24dp"
+        android:title="@string/everything"
+        />
+    <item
+        android:id="@+id/SettingsFragment"
+        android:icon="@drawable/ic_settings_24dp"
+        android:title="@string/settings"
+        />
+
+</menu>
