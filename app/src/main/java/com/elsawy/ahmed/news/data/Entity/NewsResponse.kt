@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.news.model
+package com.elsawy.ahmed.news.data.Entity
 
 
 data class NewsResponse(
