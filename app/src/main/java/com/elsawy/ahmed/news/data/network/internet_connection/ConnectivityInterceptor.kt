@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.news.data.network
+package com.elsawy.ahmed.news.data.network.internet_connection
 
 import okhttp3.Interceptor
 

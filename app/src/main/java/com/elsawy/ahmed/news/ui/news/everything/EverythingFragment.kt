@@ -6,8 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 
 import com.elsawy.ahmed.news.R
+import kotlinx.android.synthetic.main.everything_fragment.*
+import kotlinx.android.synthetic.main.top_headlines_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class EverythingFragment : Fragment() {
 
@@ -28,7 +34,13 @@ class EverythingFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(EverythingViewModel::class.java)
-        // TODO: Use the ViewModel
+
+            viewModel.getEvertNews(context!!)
+            viewModel.everyNews.observe(viewLifecycleOwner, Observer {
+                for (article in it.articles)
+                    every_textview.text = every_textview.text.toString() + "\n" + article.content
+            })
+
     }
 
 }

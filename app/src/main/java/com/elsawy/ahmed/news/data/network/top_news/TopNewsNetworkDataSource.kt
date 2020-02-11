@@ -1,9 +1,9 @@
-package com.elsawy.ahmed.news.data.network
+package com.elsawy.ahmed.news.data.network.top_news
 
 import androidx.lifecycle.LiveData
 import com.elsawy.ahmed.news.data.Entity.NewsResponse
 
-interface NewsNetworkDataSource {
+interface TopNewsNetworkDataSource {
 
     val downloadedTopNews : LiveData<NewsResponse>
 

@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.news.data.network
+package com.elsawy.ahmed.news.data.network.internet_connection
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -6,7 +6,8 @@ import com.elsawy.ahmed.news.internal.NoConnectivityException
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class ConnectivityInterceptorImpl (context : Context) : ConnectivityInterceptor {
+class ConnectivityInterceptorImpl (context : Context) :
+    ConnectivityInterceptor {
 
     private val appContext = context.applicationContext
 

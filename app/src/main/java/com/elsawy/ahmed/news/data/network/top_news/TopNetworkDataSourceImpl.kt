@@ -1,12 +1,14 @@
-package com.elsawy.ahmed.news.data.network
+package com.elsawy.ahmed.news.data.network.top_news
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.elsawy.ahmed.news.data.Entity.NewsResponse
+import com.elsawy.ahmed.news.data.network.NewsAPIService
 import com.elsawy.ahmed.news.internal.NoConnectivityException
 
-class NewsNetworkDataSourceImpl (private val newsAPIService : NewsAPIService): NewsNetworkDataSource {
+class TopNetworkDataSourceImpl (private val newsAPIService : NewsAPIService):
+    TopNewsNetworkDataSource {
 
     private val _downloadedTopNews = MutableLiveData<NewsResponse>()
 
@@ -21,4 +23,5 @@ class NewsNetworkDataSourceImpl (private val newsAPIService : NewsAPIService): N
             Log.e("Connectivity","no internet connection", ex)
         }
     }
+
 }
