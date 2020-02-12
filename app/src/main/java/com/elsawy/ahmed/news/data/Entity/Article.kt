@@ -1,6 +1,9 @@
 package com.elsawy.ahmed.news.data.Entity
 
-data class Article(
+import android.os.Parcel
+import android.os.Parcelable
+
+data class Article  (
     val author: String,
     val content: String,
     val description: String,
@@ -9,4 +12,40 @@ data class Article(
     val title: String,
     val url: String,
     val urlToImage: String
-)
+): Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readParcelable(Source::class.java.classLoader)!!,
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString()
+    )
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(author)
+        parcel.writeString(content)
+        parcel.writeString(description)
+        parcel.writeString(publishedAt)
+        parcel.writeParcelable(source, flags)
+        parcel.writeString(title)
+        parcel.writeString(url)
+        parcel.writeString(urlToImage)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Article> {
+        override fun createFromParcel(parcel: Parcel): Article {
+            return Article(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Article?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

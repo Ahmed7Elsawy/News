@@ -5,17 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.news.everything.EverythingFragment">
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/every_article_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        >
-
-    <TextView
-        android:id="@+id/every_textview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/everything" />
-    </ScrollView>
+        />
 
 </FrameLayout>
