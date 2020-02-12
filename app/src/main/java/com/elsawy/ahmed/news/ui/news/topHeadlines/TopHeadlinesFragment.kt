@@ -44,7 +44,6 @@ class TopHeadlinesFragment : Fragment() ,OnItemClickListener{
             articleAdapter.setArticleList(it.articles)
         })
 
-
     }
 
     private fun initRecyclerView() {
