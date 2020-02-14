@@ -5,8 +5,10 @@ import com.elsawy.ahmed.news.data.Entity.NewsResponse
 
 interface NewsRepository {
 
-    fun getTopNews(): LiveData<out NewsResponse >
+    fun getTopNews(): LiveData<NewsResponse >
 
-    fun getEveryNews(): LiveData<out NewsResponse >
+    fun getEveryNews(query :String, sortBy: String): LiveData<NewsResponse >
+
+    fun getDateFilterNews(query :String, sortBy: String, uploadDate: String): LiveData<NewsResponse >
 
 }

@@ -33,6 +33,7 @@ class ArticleAdapter (var itemClickListener : OnItemClickListener): RecyclerView
     }
 
     fun setArticleList(articles: List<Article>) {
+        articleList.clear()
         articleList.addAll(articles)
         notifyDataSetChanged()
     }

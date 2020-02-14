@@ -7,19 +7,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.elsawy.ahmed.news.R
 import com.elsawy.ahmed.news.data.Entity.Article
+import com.elsawy.ahmed.news.data.provider.*
 import com.elsawy.ahmed.news.ui.news.ArticleAdapter
 import com.elsawy.ahmed.news.ui.news.OnItemClickListener
 import com.elsawy.ahmed.news.ui.news.detail.DetailActivity
 import kotlinx.android.synthetic.main.everything_fragment.*
-import kotlinx.android.synthetic.main.top_headlines_fragment.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class EverythingFragment : Fragment(),OnItemClickListener {
 
@@ -30,6 +30,9 @@ class EverythingFragment : Fragment(),OnItemClickListener {
 
     private lateinit var viewModel: EverythingViewModel
     private lateinit var articleAdapter: ArticleAdapter
+    private var titleQuery: String = ""
+    private var sortBYFilter: String = "publishedAt"
+    private var uploadDateFilter: String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,12 +44,12 @@ class EverythingFragment : Fragment(),OnItemClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(EverythingViewModel::class.java)
-        initRecyclerView()
+        viewModel.initNewsRepository(context!!)
 
-            viewModel.getEvertNews(context!!)
-            viewModel.everyNews.observe(viewLifecycleOwner, Observer {
-                articleAdapter.setArticleList(it.articles)
-            })
+        initRecyclerView()
+        initSearchView()
+        initSortBySpinner()
+        initUploadDateSpinner()
 
     }
 
@@ -58,13 +61,83 @@ class EverythingFragment : Fragment(),OnItemClickListener {
         }
     }
 
+    private fun initSearchView() {
+        search_view.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                titleQuery = newText
+                return false
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                titleQuery = query
+                getEveryNews()
+                return false
+            }
+        })
+    }
+
+    private fun initSortBySpinner() {
+        val sortByArray = resources.getStringArray(R.array.sortBy)
+        val adapter =
+            ArrayAdapter(context!!.applicationContext, android.R.layout.simple_spinner_item, sortByArray)
+        sort_by_spinner.adapter = adapter
+
+        sort_by_spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                sortBYFilter = parent?.selectedItem.toString()
+                if (titleQuery.isNotEmpty())
+                    getEveryNews()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+    }
+
+    private fun initUploadDateSpinner() {
+        val uploadDateArray = resources.getStringArray(R.array.uploadDate)
+        val adapter = ArrayAdapter(
+            context!!.applicationContext,
+            android.R.layout.simple_spinner_item,
+            uploadDateArray
+        )
+
+        upload_date_spinner.adapter = adapter
+
+        upload_date_spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                var choosedUploadDate = parent?.selectedItem.toString()
+                if (titleQuery.isNotEmpty()) {
+                    uploadDateFilter = getTime(choosedUploadDate)
+                    getEveryNews()
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+    }
+
+    private fun getEveryNews() {
+        if (uploadDateFilter.isNotEmpty())
+            viewModel.getDateFilterNews(titleQuery, sortBYFilter,uploadDateFilter)
+        else
+            viewModel.getEveryNews(titleQuery, sortBYFilter)
+
+        viewModel.everyNews.observe(viewLifecycleOwner, Observer {
+            articleAdapter.setArticleList(it.articles)
+        })
+    }
+
+
     override fun onItemClicked(article: Article) {
-        activity?.let{
-            val intent = Intent (it, DetailActivity::class.java)
+        activity?.let {
+            val intent = Intent(it, DetailActivity::class.java)
             val bundle = Bundle()
             bundle.putParcelable("article", article)
             intent.putExtra("Bundle", bundle)
             it.startActivity(intent)
         }
     }
+
 }

@@ -17,7 +17,7 @@ class TopNetworkDataSourceImpl (private val newsAPIService : NewsAPIService):
 
     override suspend fun fetchTopNews() {
         try {
-            val fetchedTopNews = newsAPIService.getTopNewsRequest().await()
+            val fetchedTopNews = newsAPIService.getTopNewsRequestAsync().await()
             _downloadedTopNews.postValue(fetchedTopNews)
         }catch (ex : NoConnectivityException){
             Log.e("Connectivity","no internet connection", ex)

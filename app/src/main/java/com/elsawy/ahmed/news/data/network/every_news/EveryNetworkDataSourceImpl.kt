@@ -1,7 +1,6 @@
 package com.elsawy.ahmed.news.data.network.every_news
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.elsawy.ahmed.news.data.Entity.NewsResponse
 import com.elsawy.ahmed.news.data.network.NewsAPIService
@@ -12,12 +11,21 @@ class EveryNetworkDataSourceImpl (private val newsAPIService : NewsAPIService):
 
     private val _downloadedEveryNews = MutableLiveData<NewsResponse>()
 
-    override val downloadedEveryNews: LiveData<NewsResponse>
+    override val downloadedEveryNews: MutableLiveData<NewsResponse>
         get() = _downloadedEveryNews
 
-    override suspend fun fetchEveryNews() {
+    override suspend fun fetchEveryNews(query : String, sortBy: String) {
         try {
-            val fetchedTopNews = newsAPIService.getEveryNewsRequest().await()
+            val fetchedTopNews = newsAPIService.getEveryNewsRequestAsync(query,sortBy).await()
+            _downloadedEveryNews.postValue(fetchedTopNews)
+        } catch (ex: NoConnectivityException) {
+            Log.e("Connectivity", "no internet connection", ex)
+        }
+    }
+
+    override suspend fun fetchDateFilterNews(query : String, sortBy: String, uploadDate: String) {
+        try {
+            val fetchedTopNews = newsAPIService.getDateFilterNewsRequestAsync(query,sortBy,uploadDate).await()
             _downloadedEveryNews.postValue(fetchedTopNews)
         } catch (ex: NoConnectivityException) {
             Log.e("Connectivity", "no internet connection", ex)

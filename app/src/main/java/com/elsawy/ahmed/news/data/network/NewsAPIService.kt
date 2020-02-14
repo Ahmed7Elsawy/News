@@ -16,13 +16,21 @@ const val API_KEY : String = "1656a19191114687b19459ff60ecd0a6"
 interface NewsAPIService {
 
     @GET("top-headlines")
-    fun getTopNewsRequest(
+    fun getTopNewsRequestAsync(
         @Query("country") country: String = "us"
     ):Deferred<NewsResponse>
 
     @GET("everything")
-    fun getEveryNewsRequest(
-                @Query("q") country: String = "bitcoin"
+    fun getEveryNewsRequestAsync(
+        @Query("qInTitle") query: String,
+        @Query("sortBy") sortBy: String
+    ):Deferred<NewsResponse>
+
+    @GET("everything")
+    fun getDateFilterNewsRequestAsync(
+        @Query("qInTitle") query: String,
+        @Query("sortBy") sortBy: String,
+        @Query("from") uploadDate: String
     ):Deferred<NewsResponse>
 
 

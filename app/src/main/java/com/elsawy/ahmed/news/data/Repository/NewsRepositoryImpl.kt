@@ -7,6 +7,7 @@ import com.elsawy.ahmed.news.data.network.internet_connection.ConnectivityInterc
 import com.elsawy.ahmed.news.data.network.NewsAPIService
 import com.elsawy.ahmed.news.data.network.every_news.EveryNetworkDataSourceImpl
 import com.elsawy.ahmed.news.data.network.top_news.TopNetworkDataSourceImpl
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -14,7 +15,7 @@ import kotlinx.coroutines.launch
 class NewsRepositoryImpl(private val context : Context) : NewsRepository {
 
     private lateinit var articles: LiveData<NewsResponse>
-    override  fun getTopNews(): LiveData<out NewsResponse> {
+    override  fun getTopNews(): LiveData<NewsResponse> {
 
         val newsAPIService = NewsAPIService(
             ConnectivityInterceptorImpl(
@@ -35,13 +36,14 @@ class NewsRepositoryImpl(private val context : Context) : NewsRepository {
         return articles
     }
 
-    override fun getEveryNews(): LiveData<out NewsResponse> {
+    override fun getEveryNews(query : String, sortBy: String): LiveData<NewsResponse> {
 
         val newsAPIService = NewsAPIService(
             ConnectivityInterceptorImpl(
                 this.context
             )
         )
+
         val newsNetworkDataSource =
             EveryNetworkDataSourceImpl(
                 newsAPIService
@@ -49,8 +51,30 @@ class NewsRepositoryImpl(private val context : Context) : NewsRepository {
 
         articles = newsNetworkDataSource.downloadedEveryNews
 
-        GlobalScope.launch(Dispatchers.Main) {
-            newsNetworkDataSource.fetchEveryNews()
+        CoroutineScope(Dispatchers.IO ).launch {
+            newsNetworkDataSource.fetchEveryNews(query, sortBy)
+        }
+
+        return articles
+    }
+
+    override fun getDateFilterNews(query : String, sortBy: String, uploadDate: String): LiveData<NewsResponse> {
+
+        val newsAPIService = NewsAPIService(
+            ConnectivityInterceptorImpl(
+                this.context
+            )
+        )
+
+        val newsNetworkDataSource =
+            EveryNetworkDataSourceImpl(
+                newsAPIService
+            )
+
+        articles = newsNetworkDataSource.downloadedEveryNews
+
+        CoroutineScope(Dispatchers.IO ).launch {
+            newsNetworkDataSource.fetchDateFilterNews(query, sortBy,uploadDate)
         }
 
         return articles

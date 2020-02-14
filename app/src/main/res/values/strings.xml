@@ -3,4 +3,19 @@
     <string name="top_headlines">Top headlines</string>
     <string name="everything">Everything</string>
     <string name="settings">Settings</string>
+
+    <string-array name="sortBy">
+        <item>publishedAt</item>
+        <item>Relevancy</item>
+        <item>Popularity</item>
+    </string-array>
+
+    <string-array name="uploadDate">
+        <item>today</item>
+        <item>this weak</item>
+        <item>this month</item>
+        <item>this year</item>
+    </string-array>
+
+
 </resources>

@@ -86,4 +86,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
+    // Better dateTime-time support even on older Android versions
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
+
 }
