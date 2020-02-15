@@ -44,7 +44,7 @@ class EverythingFragment : Fragment(),OnItemClickListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(EverythingViewModel::class.java)
-        viewModel.initNewsRepository(context!!)
+//        viewModel.initNewsRepository(context!!)
 
         initRecyclerView()
         initSearchView()
@@ -111,6 +111,7 @@ class EverythingFragment : Fragment(),OnItemClickListener {
                 if (titleQuery.isNotEmpty()) {
                     uploadDateFilter = getTime(choosedUploadDate)
                     getEveryNews()
+
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
