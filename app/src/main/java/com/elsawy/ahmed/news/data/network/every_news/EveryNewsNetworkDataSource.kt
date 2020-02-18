@@ -7,7 +7,5 @@ interface EveryNewsNetworkDataSource {
 
     val downloadedEveryNews : LiveData<NewsResponse>
 
-    suspend fun fetchEveryNews(query : String, sortBy: String)
-
-    suspend fun fetchDateFilterNews(query : String, sortBy: String, uploadDate: String)
+    suspend fun fetchEveryNews(query : String, sortBy: String, uploadDate: String)
 }

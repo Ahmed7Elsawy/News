@@ -8,7 +8,6 @@
     android:padding="10dp"
     >
 
-
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search_view"
         android:layout_width="match_parent"
@@ -23,7 +22,7 @@
         android:layout_marginTop="5dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Sort By:"
@@ -49,7 +48,7 @@
         android:layout_marginTop="15dp">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="upload date:"

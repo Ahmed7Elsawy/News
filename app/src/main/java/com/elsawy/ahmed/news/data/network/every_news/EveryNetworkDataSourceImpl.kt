@@ -14,18 +14,10 @@ class EveryNetworkDataSourceImpl (private val newsAPIService : NewsAPIService):
     override val downloadedEveryNews: MutableLiveData<NewsResponse>
         get() = _downloadedEveryNews
 
-    override suspend fun fetchEveryNews(query : String, sortBy: String) {
-        try {
-            val fetchedTopNews = newsAPIService.getEveryNewsRequestAsync(query,sortBy).await()
-            _downloadedEveryNews.postValue(fetchedTopNews)
-        } catch (ex: NoConnectivityException) {
-            Log.e("Connectivity", "no internet connection", ex)
-        }
-    }
 
-    override suspend fun fetchDateFilterNews(query : String, sortBy: String, uploadDate: String) {
+    override suspend fun fetchEveryNews(query : String, sortBy: String, uploadDate: String) {
         try {
-            val fetchedTopNews = newsAPIService.getDateFilterNewsRequestAsync(query,sortBy,uploadDate).await()
+            val fetchedTopNews = newsAPIService.getEveryNewsRequestAsync(query,sortBy,uploadDate).await()
             _downloadedEveryNews.postValue(fetchedTopNews)
         } catch (ex: NoConnectivityException) {
             Log.e("Connectivity", "no internet connection", ex)

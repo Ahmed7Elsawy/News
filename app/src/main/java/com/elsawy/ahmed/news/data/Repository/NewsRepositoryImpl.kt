@@ -7,6 +7,8 @@ import com.elsawy.ahmed.news.data.network.internet_connection.ConnectivityInterc
 import com.elsawy.ahmed.news.data.network.NewsAPIService
 import com.elsawy.ahmed.news.data.network.every_news.EveryNetworkDataSourceImpl
 import com.elsawy.ahmed.news.data.network.top_news.TopNetworkDataSourceImpl
+import com.elsawy.ahmed.news.data.provider.CategoryProviderImpl
+import com.elsawy.ahmed.news.data.provider.CountryProviderImpl
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -30,13 +32,13 @@ class NewsRepositoryImpl(private val context : Context) : NewsRepository {
         articles = newsNetworkDataSource.downloadedTopNews
 
         GlobalScope.launch(Dispatchers.Main) {
-            newsNetworkDataSource.fetchTopNews()
+            newsNetworkDataSource.fetchTopNews(getPreferredCountry(),getPreferredCategory())
         }
 
         return articles
     }
 
-    override fun getEveryNews(query : String, sortBy: String): LiveData<NewsResponse> {
+    override fun getEveryNews(query : String, sortBy: String, uploadDate: String): LiveData<NewsResponse> {
 
         val newsAPIService = NewsAPIService(
             ConnectivityInterceptorImpl(
@@ -52,32 +54,20 @@ class NewsRepositoryImpl(private val context : Context) : NewsRepository {
         articles = newsNetworkDataSource.downloadedEveryNews
 
         CoroutineScope(Dispatchers.IO ).launch {
-            newsNetworkDataSource.fetchEveryNews(query, sortBy)
+            newsNetworkDataSource.fetchEveryNews(query, sortBy,uploadDate)
         }
 
         return articles
     }
 
-    override fun getDateFilterNews(query : String, sortBy: String, uploadDate: String): LiveData<NewsResponse> {
+    private fun getPreferredCountry() : String{
+        val countryProviderImpl = CountryProviderImpl(context)
+        return countryProviderImpl.getPreferredCountryString()
+    }
 
-        val newsAPIService = NewsAPIService(
-            ConnectivityInterceptorImpl(
-                this.context
-            )
-        )
-
-        val newsNetworkDataSource =
-            EveryNetworkDataSourceImpl(
-                newsAPIService
-            )
-
-        articles = newsNetworkDataSource.downloadedEveryNews
-
-        CoroutineScope(Dispatchers.IO ).launch {
-            newsNetworkDataSource.fetchDateFilterNews(query, sortBy,uploadDate)
-        }
-
-        return articles
+    private fun getPreferredCategory() : String{
+        val categoryProviderImpl = CategoryProviderImpl(context)
+        return categoryProviderImpl.getPreferredCategoryString()
     }
 
 }

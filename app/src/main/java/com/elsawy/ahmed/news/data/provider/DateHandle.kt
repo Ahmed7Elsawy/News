@@ -11,7 +11,6 @@ import java.util.*
 private const val dayMilliSecond = 86400000L
 private const val weekMilliSecond = 604800000L
 private const val monthMilliSecond = 2592000000L
-private const val yearMilliSecond = 31540000000L
 
 private fun getBeforeTime(minusTime: Long) : String {
 
@@ -44,18 +43,13 @@ private fun getMonthTime(): String{
     return getBeforeTime(monthMilliSecond)
 }
 
-private fun getYearTime(): String{
-    return getBeforeTime(yearMilliSecond)
-}
 
 fun getTime(time: String): String{
     if (time == "today")
         return getTodayTime()
     if (time == "this weak")
         return getWeekTime()
-    if (time == "this month")
+    else (time == "this month")
         return getMonthTime()
-    else
-        return getYearTime()
 
 }

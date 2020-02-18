@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,7 +33,7 @@ class EverythingFragment : Fragment(),OnItemClickListener {
     private lateinit var articleAdapter: ArticleAdapter
     private var titleQuery: String = ""
     private var sortBYFilter: String = "publishedAt"
-    private var uploadDateFilter: String = ""
+    private var uploadDateFilter: String = getTime("today")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,9 +44,10 @@ class EverythingFragment : Fragment(),OnItemClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(EverythingViewModel::class.java)
-//        viewModel.initNewsRepository(context!!)
+        (activity as? AppCompatActivity)?.supportActionBar?.title = "Search"
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
 
+        viewModel = ViewModelProviders.of(this).get(EverythingViewModel::class.java)
         initRecyclerView()
         initSearchView()
         initSortBySpinner()
@@ -120,11 +122,7 @@ class EverythingFragment : Fragment(),OnItemClickListener {
     }
 
     private fun getEveryNews() {
-        if (uploadDateFilter.isNotEmpty())
-            viewModel.getDateFilterNews(titleQuery, sortBYFilter,uploadDateFilter)
-        else
-            viewModel.getEveryNews(titleQuery, sortBYFilter)
-
+        viewModel.getEveryNews(titleQuery, sortBYFilter,uploadDateFilter)
         viewModel.everyNews.observe(viewLifecycleOwner, Observer {
             articleAdapter.setArticleList(it.articles)
         })

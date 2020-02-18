@@ -15,9 +15,9 @@ class TopNetworkDataSourceImpl (private val newsAPIService : NewsAPIService):
     override val downloadedTopNews: LiveData<NewsResponse>
         get() = _downloadedTopNews
 
-    override suspend fun fetchTopNews() {
+    override suspend fun fetchTopNews(country: String,category: String) {
         try {
-            val fetchedTopNews = newsAPIService.getTopNewsRequestAsync().await()
+            val fetchedTopNews = newsAPIService.getTopNewsRequestAsync(country,category).await()
             _downloadedTopNews.postValue(fetchedTopNews)
         }catch (ex : NoConnectivityException){
             Log.e("Connectivity","no internet connection", ex)

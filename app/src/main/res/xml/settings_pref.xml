@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+        <ListPreference
+            android:defaultValue="us"
+            android:entries="@array/countryEntries"
+            android:entryValues="@array/countries"
+            android:key="COUNTRY"
+            android:title="Country"
+            android:summary="%s"
+            />
+
+        <ListPreference
+            android:defaultValue="general"
+            android:entries="@array/category"
+            android:entryValues="@array/category"
+            android:key="CATEGORY"
+            android:title="Category"
+            android:summary="%s"
+            />
+
+</PreferenceScreen>

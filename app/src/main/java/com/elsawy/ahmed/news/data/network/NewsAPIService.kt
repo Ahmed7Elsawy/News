@@ -17,17 +17,12 @@ interface NewsAPIService {
 
     @GET("top-headlines")
     fun getTopNewsRequestAsync(
-        @Query("country") country: String = "us"
+        @Query("country") country: String,
+        @Query("category") category: String
     ):Deferred<NewsResponse>
 
     @GET("everything")
     fun getEveryNewsRequestAsync(
-        @Query("qInTitle") query: String,
-        @Query("sortBy") sortBy: String
-    ):Deferred<NewsResponse>
-
-    @GET("everything")
-    fun getDateFilterNewsRequestAsync(
         @Query("qInTitle") query: String,
         @Query("sortBy") sortBy: String,
         @Query("from") uploadDate: String

@@ -15,13 +15,9 @@ class EverythingViewModel(application: Application) : AndroidViewModel(applicati
     lateinit var everyNews: LiveData<NewsResponse>
     private var newsRepository: NewsRepositoryImpl = NewsRepositoryImpl(getApplication())
 
-    fun getEveryNews(query: String, sortBy: String) {
-        everyNews = newsRepository.getEveryNews(query, sortBy)
-    }
 
-    fun getDateFilterNews(query: String, sortBy: String, uploadDate: String) {
-        everyNews = newsRepository.getDateFilterNews(query, sortBy,uploadDate)
-        Log.i("datefilter",uploadDate)
+    fun getEveryNews(query: String, sortBy: String, uploadDate: String) {
+        everyNews = newsRepository.getEveryNews(query, sortBy,uploadDate)
     }
 
 }
