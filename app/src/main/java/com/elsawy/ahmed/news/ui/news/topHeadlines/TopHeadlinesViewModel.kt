@@ -1,21 +1,27 @@
 package com.elsawy.ahmed.news.ui.news.topHeadlines
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.*
-import com.elsawy.ahmed.news.data.Entity.NewsResponse
-import com.elsawy.ahmed.news.data.Repository.NewsRepositoryImpl
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.elsawy.ahmed.news.data.repository.TopNewsRepository
+import com.elsawy.ahmed.news.data.db.entity.NewsResponse
+import com.elsawy.ahmed.news.data.repository.TopNewsRepositoryImpl
+import com.elsawy.ahmed.news.data.db.ArticleDao
+import com.elsawy.ahmed.news.data.db.ArticleRoomDatabase
 
-class TopHeadlinesViewModel : ViewModel(){
+class TopHeadlinesViewModel(application: Application) : AndroidViewModel(application){
 
-    lateinit var topNews : LiveData<NewsResponse>
+    var topNews : LiveData<NewsResponse>
+    private val topNewsRepository: TopNewsRepository
 
-    fun getTopNews(context: Context) {
-        val newsRepository = NewsRepositoryImpl(context)
+    init {
+        val articleDao: ArticleDao = ArticleRoomDatabase(getApplication()).articleDao()
 
-         topNews = newsRepository.getTopNews() as LiveData<NewsResponse>
+        topNewsRepository = TopNewsRepositoryImpl(getApplication(),articleDao)
+        topNews = topNewsRepository.getTopNews()
+
+
+
+//        allArticles = repository.allArticles
     }
 
 }

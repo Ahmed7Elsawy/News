@@ -15,7 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.elsawy.ahmed.news.R
-import com.elsawy.ahmed.news.data.Entity.Article
+import com.elsawy.ahmed.news.data.db.entity.Article
 import com.elsawy.ahmed.news.data.provider.*
 import com.elsawy.ahmed.news.ui.news.ArticleAdapter
 import com.elsawy.ahmed.news.ui.news.OnItemClickListener

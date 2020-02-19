@@ -1,6 +1,6 @@
 package com.elsawy.ahmed.news.data.network
 
-import com.elsawy.ahmed.news.data.Entity.NewsResponse
+import com.elsawy.ahmed.news.data.db.entity.NewsResponse
 import com.elsawy.ahmed.news.data.network.internet_connection.ConnectivityInterceptor
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import kotlinx.coroutines.Deferred

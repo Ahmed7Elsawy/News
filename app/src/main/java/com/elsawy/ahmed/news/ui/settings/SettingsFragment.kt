@@ -1,9 +1,12 @@
 package com.elsawy.ahmed.news.ui.settings
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.preference.PreferenceFragmentCompat
 import com.elsawy.ahmed.news.R
+import com.elsawy.ahmed.news.data.db.ArticleRoomDatabase
 
 class SettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -14,6 +17,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onActivityCreated(savedInstanceState)
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Settings"
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
+
+        val articleDao = ArticleRoomDatabase(context!!).articleDao()
+
+        articleDao.getAllArticles().observe(viewLifecycleOwner, Observer {
+            Log.i("article", it.size.toString())
+            for (article in it)
+                Log.i("articls", article.title)
+        })
     }
 
 

@@ -1,18 +1,45 @@
-package com.elsawy.ahmed.news.data.Entity
+package com.elsawy.ahmed.news.data.db.entity
 
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.annotation.Nullable
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
+
+@Entity(tableName = "article_table")
 data class Article  (
+    @Nullable
+    @SerializedName("author")
     val author: String,
+    @Nullable
+    @SerializedName("content")
     val content: String,
+    @Nullable
+    @SerializedName("description")
     val description: String,
+    @Nullable
+    @SerializedName("publishedAt")
     val publishedAt: String,
+    @Embedded(prefix = "source_")
     val source: Source,
+    @PrimaryKey(autoGenerate = false)
+    @SerializedName("title")
     val title: String,
+    @Nullable
+    @SerializedName("url")
     val url: String,
+    @Nullable
+    @SerializedName("urlToImage")
     val urlToImage: String
 ): Parcelable {
+
+//    @PrimaryKey(autoGenerate = true)
+//    var id: Int = 0
+
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readString().toString(),

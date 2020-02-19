@@ -13,14 +13,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.elsawy.ahmed.news.R
-import com.elsawy.ahmed.news.data.Entity.Article
-import com.elsawy.ahmed.news.data.provider.CategoryProviderImpl
-import com.elsawy.ahmed.news.data.provider.CountryProviderImpl
-import com.elsawy.ahmed.news.data.provider.PreferenceProvider
+import com.elsawy.ahmed.news.data.db.ArticleDao
+import com.elsawy.ahmed.news.data.db.ArticleRoomDatabase
+import com.elsawy.ahmed.news.data.db.entity.Article
 import com.elsawy.ahmed.news.ui.news.ArticleAdapter
 import com.elsawy.ahmed.news.ui.news.OnItemClickListener
 import com.elsawy.ahmed.news.ui.news.detail.DetailActivity
 import kotlinx.android.synthetic.main.top_headlines_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class TopHeadlinesFragment : Fragment() ,OnItemClickListener{
 
@@ -31,6 +33,7 @@ class TopHeadlinesFragment : Fragment() ,OnItemClickListener{
 
     private lateinit var viewModel: TopHeadlinesViewModel
     private lateinit var articleAdapter: ArticleAdapter
+    lateinit var articleDao: ArticleDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,13 +48,36 @@ class TopHeadlinesFragment : Fragment() ,OnItemClickListener{
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
 
 
+        articleDao = ArticleRoomDatabase(context!!).articleDao()
+
+//        articleDao.getAllArticles().observe(viewLifecycleOwner, Observer {
+//            Log.i("article", it.size.toString())
+//            for (article in it)
+//                Log.i("articls", article.title)
+//        })
+
         initRecyclerView()
         viewModel = ViewModelProviders.of(this).get(TopHeadlinesViewModel::class.java)
-        viewModel.getTopNews(context!!)
         viewModel.topNews.observe(viewLifecycleOwner, Observer {
             articleAdapter.setArticleList(it.articles)
+
+            setDB(it.articles)
         })
 
+    }
+
+    private fun setDB(articles: List<Article>)
+    {
+        Log.i("articleInsert", articles.size.toString())
+        GlobalScope.launch(Dispatchers.IO) {
+//            for (article in articles) {
+//                articleDao.insert(article)
+//                Log.i("articlsIns", article.title)
+//            }
+//            val s = articleDao.insertAll(articles)
+//            Log.i("articlsSize", s.size.toString())
+
+        }
     }
 
     private fun initRecyclerView() {

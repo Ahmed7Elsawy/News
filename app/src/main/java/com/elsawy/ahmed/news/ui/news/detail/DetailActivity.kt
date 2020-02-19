@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
 import com.elsawy.ahmed.news.R
-import com.elsawy.ahmed.news.data.Entity.Article
+import com.elsawy.ahmed.news.data.db.entity.Article
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {

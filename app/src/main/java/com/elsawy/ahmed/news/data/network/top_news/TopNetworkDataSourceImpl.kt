@@ -3,7 +3,7 @@ package com.elsawy.ahmed.news.data.network.top_news
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.elsawy.ahmed.news.data.Entity.NewsResponse
+import com.elsawy.ahmed.news.data.db.entity.NewsResponse
 import com.elsawy.ahmed.news.data.network.NewsAPIService
 import com.elsawy.ahmed.news.internal.NoConnectivityException
 

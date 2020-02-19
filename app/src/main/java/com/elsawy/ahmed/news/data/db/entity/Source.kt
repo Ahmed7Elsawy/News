@@ -1,4 +1,4 @@
-package com.elsawy.ahmed.news.data.Entity
+package com.elsawy.ahmed.news.data.db.entity
 
 import android.os.Parcel
 import android.os.Parcelable

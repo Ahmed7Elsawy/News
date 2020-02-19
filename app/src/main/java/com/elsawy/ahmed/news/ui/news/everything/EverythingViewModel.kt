@@ -1,23 +1,20 @@
 package com.elsawy.ahmed.news.ui.news.everything
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.elsawy.ahmed.news.data.Entity.NewsResponse
-import com.elsawy.ahmed.news.data.Repository.NewsRepositoryImpl
+import com.elsawy.ahmed.news.data.db.entity.NewsResponse
+import com.elsawy.ahmed.news.data.repository.SearchNewsRepository
+import com.elsawy.ahmed.news.data.repository.SearchNewsRepositoryImpl
 
 class EverythingViewModel(application: Application) : AndroidViewModel(application) {
 
     lateinit var everyNews: LiveData<NewsResponse>
-    private var newsRepository: NewsRepositoryImpl = NewsRepositoryImpl(getApplication())
+    private var searchNewsRepository: SearchNewsRepository = SearchNewsRepositoryImpl(getApplication())
 
 
     fun getEveryNews(query: String, sortBy: String, uploadDate: String) {
-        everyNews = newsRepository.getEveryNews(query, sortBy,uploadDate)
+        everyNews = searchNewsRepository.getEveryNews(query, sortBy,uploadDate)
     }
 
 }

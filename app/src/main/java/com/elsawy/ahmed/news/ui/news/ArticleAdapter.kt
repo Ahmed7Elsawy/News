@@ -1,6 +1,5 @@
 package com.elsawy.ahmed.news.ui.news
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.elsawy.ahmed.news.R
-import com.elsawy.ahmed.news.data.Entity.Article
+import com.elsawy.ahmed.news.data.db.entity.Article
 import kotlinx.android.synthetic.main.item_article.view.*
 
 class ArticleAdapter (var itemClickListener : OnItemClickListener): RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
