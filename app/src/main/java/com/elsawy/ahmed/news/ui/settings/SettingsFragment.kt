@@ -18,13 +18,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Settings"
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
 
-        val articleDao = ArticleRoomDatabase(context!!).articleDao()
-
-        articleDao.getAllArticles().observe(viewLifecycleOwner, Observer {
-            Log.i("article", it.size.toString())
-            for (article in it)
-                Log.i("articls", article.title)
-        })
     }
 
 

@@ -3,35 +3,31 @@ package com.elsawy.ahmed.news.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.elsawy.ahmed.news.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var navController: NavController
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         setSupportActionBar(toolbar)
 
-        navController = Navigation.findNavController(this,
-            R.id.nav_host_fragment
-        )
-//
-        bottom_nav.setupWithNavController(navController)
+        val host: NavHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment? ?: return
 
-//
-//        NavigationUI.setupActionBarWithNavController(this,navController)
+        val navController = host.navController
+
+        setupBottomNavMenu(navController)
     }
 
-//    override fun onSupportNavigateUp(): Boolean {
-//        return NavigationUI.navigateUp(null, navController)
-//    }
-
-
-
+    private fun setupBottomNavMenu(navController: NavController){
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        bottomNav?.setupWithNavController(navController)
+    }
 
 }

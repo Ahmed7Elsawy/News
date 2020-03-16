@@ -13,11 +13,11 @@ interface ArticleDao {
     @Query("SELECT * from article_table")
     fun getAllArticles(): LiveData<List<Article>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(article: Article)
+    @Query("SELECT count(*) from article_table")
+    fun getArticlesCount(): LiveData<Int>
 
-//    @Insert(onConflict = OnConflictStrategy.IGNORE)
-//    suspend fun insertAll(articles: List<Article>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(article: List<Article>)
 
     @Query("DELETE FROM article_table")
     suspend fun deleteAll()

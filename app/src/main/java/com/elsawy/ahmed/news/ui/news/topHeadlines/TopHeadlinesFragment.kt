@@ -33,7 +33,6 @@ class TopHeadlinesFragment : Fragment() ,OnItemClickListener{
 
     private lateinit var viewModel: TopHeadlinesViewModel
     private lateinit var articleAdapter: ArticleAdapter
-    lateinit var articleDao: ArticleDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,37 +46,14 @@ class TopHeadlinesFragment : Fragment() ,OnItemClickListener{
         (activity as? AppCompatActivity)?.supportActionBar?.title = "Top haedlines"
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
 
-
-        articleDao = ArticleRoomDatabase(context!!).articleDao()
-
-//        articleDao.getAllArticles().observe(viewLifecycleOwner, Observer {
-//            Log.i("article", it.size.toString())
-//            for (article in it)
-//                Log.i("articls", article.title)
-//        })
-
         initRecyclerView()
         viewModel = ViewModelProviders.of(this).get(TopHeadlinesViewModel::class.java)
         viewModel.topNews.observe(viewLifecycleOwner, Observer {
-            articleAdapter.setArticleList(it.articles)
+            articleAdapter.setArticleList(it)
+            Log.i("article select", it.size.toString())
 
-            setDB(it.articles)
         })
 
-    }
-
-    private fun setDB(articles: List<Article>)
-    {
-        Log.i("articleInsert", articles.size.toString())
-        GlobalScope.launch(Dispatchers.IO) {
-//            for (article in articles) {
-//                articleDao.insert(article)
-//                Log.i("articlsIns", article.title)
-//            }
-//            val s = articleDao.insertAll(articles)
-//            Log.i("articlsSize", s.size.toString())
-
-        }
     }
 
     private fun initRecyclerView() {

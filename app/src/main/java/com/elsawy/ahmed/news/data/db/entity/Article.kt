@@ -2,45 +2,36 @@ package com.elsawy.ahmed.news.data.db.entity
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.annotation.Nullable
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 
 @Entity(tableName = "article_table")
 data class Article  (
-    @Nullable
+    @PrimaryKey(autoGenerate = true)
+    val Id: Int,
     @SerializedName("author")
-    val author: String,
-    @Nullable
+    val author: String?,
     @SerializedName("content")
-    val content: String,
-    @Nullable
+    val content: String?,
     @SerializedName("description")
-    val description: String,
-    @Nullable
+    val description: String?,
     @SerializedName("publishedAt")
-    val publishedAt: String,
+    val publishedAt: String?,
     @Embedded(prefix = "source_")
-    val source: Source,
-    @PrimaryKey(autoGenerate = false)
+    val source: Source?,
     @SerializedName("title")
-    val title: String,
-    @Nullable
+    val title: String?,
     @SerializedName("url")
-    val url: String,
-    @Nullable
+    val url: String?,
     @SerializedName("urlToImage")
-    val urlToImage: String
+    val urlToImage: String?
 ): Parcelable {
 
-//    @PrimaryKey(autoGenerate = true)
-//    var id: Int = 0
-
     constructor(parcel: Parcel) : this(
+        parcel.readInt(),
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -52,6 +43,7 @@ data class Article  (
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(Id)
         parcel.writeString(author)
         parcel.writeString(content)
         parcel.writeString(description)
