@@ -5,4 +5,8 @@ It’s an android app was written by Kotlin, The App gets Top Articles from API 
 
 ## Demo
 
+https://user-images.githubusercontent.com/32717670/140188932-debef79a-e35a-4003-bf60-bc576c1cf024.mp4
+
 https://youtu.be/9meZdCf9agw
+
+
